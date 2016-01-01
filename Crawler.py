@@ -82,6 +82,7 @@ $> """ + argv[0] + " [ID] [PW]")
 	if (point == None):
 		show("login failed!")
 		exit()
+	show("login success.")
 
 	#page view
 	aurl = "/index.php?mid=mina&page="
@@ -96,6 +97,7 @@ $> """ + argv[0] + " [ID] [PW]")
 
 		#get links in page
 		content = getContent(burl)
+		point = getPoint(content)
 		titles = content.find_all('a', attrs = {'class': 'hx'})
 		print ("now point: " + str(point))
 		print ("now page: " + str(page))
