@@ -104,7 +104,7 @@ $> """ + argv[0] + " [ID] [PW]")
 		print ("now point: " + str(point))
 		print ("now page: " + str(page))
 
-		for index in range(len(titles)):
-			content = getContent(url + titles[index]['data-viewer'])
+		for title in titles:
+			content = getContent(url + title['data-viewer'])
 else:
 	print('it must run by itselft')
