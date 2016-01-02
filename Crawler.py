@@ -14,10 +14,11 @@ from bs4 import BeautifulSoup
 def show(text):
 	print (text)
 
-def getContent(url):
-	response = opener.open(url)
-	content = BeautifulSoup(response, "lxml")
-	return content
+def getView(url):
+	return opener.open(url)
+
+def getContent(view):
+	return BeautifulSoup(view, "lxml")
 
 def getPoint(content):
 	point = content.find('div', attrs = {'class': 'gpe_levelpoint'})
@@ -40,14 +41,11 @@ def setPage(page):
 	fp.write(str(page))
 	fp.close()
 
-#for debug
-def save(text):
-	with open("save.txt", "w", encoding='utf-8') as fp:
-		fp.write(text)
-		fp.close()
+page = 0
+targetUrl = "http://www.weehan.com"
+actUrl = "/index.php?mid=mina&page="
 
 if __name__ == "__main__":
-	page = 0
 	#start from existing storage page 
 	if (path.exists(pageurl)):
 		page = getPage()
@@ -65,9 +63,6 @@ $> """ + argv[0] + " [ID] [PW]")
 	user_id = str(argv[1])
 	user_pw = str(argv[2])
 
-	#this is target url
-	url = "http://www.weehan.com"
-
 	#make cookie jar
 	cj = http.cookiejar.LWPCookieJar()
 	opener = ur.build_opener(ur.HTTPCookieProcessor(cj))
@@ -78,33 +73,27 @@ $> """ + argv[0] + " [ID] [PW]")
 	params = params.encode('utf-8')
 
 	#request, response
-	req = ur.Request(url, params)
-	point = getPoint(getContent(req))
+	req = ur.Request(targetUrl, params)
+	point = getPoint(getContent(getView(req)))
 
 	if (point == None):
 		show("login failed!")
 		exit()
 	show("login success.")
 
-	#page view
-	aurl = "/index.php?mid=mina&page="
-
 	while True:
 		#stop point save for after run
 		setPage(page)
 		page = page + 1
 
-		#reset url,
-		burl = url + aurl + str(page)
-
 		#get links in page
-		content = getContent(burl)
+		content = getContent(getView(targetUrl + actUrl + str(page)))
 		point = getPoint(content)
 		titles = content.find_all('a', attrs = {'class': 'hx'})
 		print ("now point: " + str(point))
 		print ("now page: " + str(page))
 
 		for title in titles:
-			content = getContent(url + title['data-viewer'])
+			content = getView(targetUrl + title['data-viewer'])
 else:
 	print('it must run by itselft')
