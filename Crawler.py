@@ -15,7 +15,11 @@ def show(text):
 	print (text)
 
 def getView(url):
-	return opener.open(url)
+	try:
+		view = opener.open(url)
+	except:
+		view = None
+	return view
 
 def getContent(view):
 	return BeautifulSoup(view, "lxml")
@@ -94,6 +98,8 @@ $> """ + argv[0] + " [ID] [PW]")
 		print ("now page: " + str(page))
 
 		for title in titles:
-			content = getView(targetUrl + title['data-viewer'])
+			title = title['data-viewer']
+			if title!= None:
+				content = getView(targetUrl + title)
 else:
 	print('it must run by itselft')
