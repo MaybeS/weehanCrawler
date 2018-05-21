@@ -22,10 +22,12 @@ def get_point(opener, content):
 def get_pages(opener, page):
     url = 'http://www.weehan.com/index.php?mid=board_all&page={}'.format(page)
     content = parse(opener.open(request(url)))
-    yield content
-    for title in content.find_all('td', attrs={'class': 'title'}):
-        yield title.find('a').get('href')
+    return content, [title.find('a').get('href') for title in content.find_all('td', attrs={'class': 'title'})]
 
 def get_page(opener, link):
-    url = 'http://www.weehan.com/{}'.format(link)
-    return parse(opener.open(request(url)))
+    try:
+        url = 'http://www.weehan.com/{}'.format(link)
+        opener.open(request(url))
+        return True
+    except:
+        return False

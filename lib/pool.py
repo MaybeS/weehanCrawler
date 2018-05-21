@@ -2,7 +2,7 @@ import multiprocessing as mp
 
 def run(task, args):
     pool = mp.Pool()
-    r = pool.map_async(task, args)
+    tasks = [pool.apply_async(task, (arg,)) for arg in args]
     pool.close()
     pool.join()
-    return r.get()
+    return [task.get() for task in tasks]
