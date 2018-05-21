@@ -1,20 +1,13 @@
 # weehanCrawler
 weehan point crawler
 
-##Usage
-`
-$> python crawler.py [ID] [PW]
-`
+Use multiprocessing.pool to process crawling concurrently.
 
-##Require
-+ Python34
+## Usage
+```
+python weehan [ID] [PW]
+```
 
-##Imported
-+ request@urllib
-+ parse@urllib
-+ BeautifulSoup@bs4
-+ codecs
-+ sys
-
-##etc
-crawler build `page.ini` for save now page
+## Requirements
+- beautifulsoup4
+- lxml
