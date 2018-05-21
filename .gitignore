@@ -1,4 +1,4 @@
-## Ignore
+__pycache__/
+__cache__/
 
-#page information
-page.ini
+page.p
