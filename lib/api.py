@@ -28,4 +28,4 @@ def get_pages(opener, page):
 
 def get_page(opener, link):
     url = 'http://www.weehan.com/{}'.format(link)
-    return parse(opener.open(request(url)))
+    return opener.open(request(url))
