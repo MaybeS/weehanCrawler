@@ -18,12 +18,16 @@ def main(id, pw):
 
     page = load()
     while True:
-        content, pages = api.get_pages(opener, page)
-        print ('now page:', page, 'now point:', api.get_point(opener, content))
-        result = run(partial(api.get_page, opener), pages)
-        page += 1
-        save(page)
-        sleep(randint(5, 10))
+        try:
+            content, pages = api.get_pages(opener, page)
+            print ('now page:', page, 'now point:', api.get_point(opener, content))
+            result = run(partial(api.get_page, opener), pages)
+            page += 1
+            save(page)
+            sleep(randint(5, 10))
+        except Exception as e:
+            print ('Error!', e)
+            sleep(10)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
